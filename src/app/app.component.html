@@ -3,11 +3,31 @@
   <form [formGroup]='registrationForm'>
     <div class="form-group">
       <label>Username</label>
-      <input type="text" class="form-control" formControlName='userName'>
+      <input type="text" class="form-control" formControlName='userName'
+      [class.is-invalid]="userName.touched && userName.invalid">
+      <!-- Commented for Associate's reference -->
+      <!-- <small class="text-danger" [class.d-none]="userName.valid || userName.untouched">
+        Username is required
+      </small> -->
+      <div *ngIf="userName.touched && userName.invalid">
+        <small *ngIf="userName.errors?.required" class="text-danger">
+          Username is required
+        </small>
+        <small *ngIf="userName.errors?.minlength" class="text-danger">
+          Username must be at least 3 characters long
+        </small>
+        <small *ngIf="userName.errors?.forbiddenName" class="text-danger">
+          {{ userName.errors?.forbiddenName.value }} Username is not allowed
+        </small>
+      </div>
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input type="password" class="form-control" formControlName='password'>
+      <input type="password" class="form-control" formControlName='password'
+        [class.is-invalid]="password.touched && password.invalid">
+        <small *ngIf="password.errors?.forbiddenName" class="text-danger">
+          {{ password.errors?.forbiddenName.value }} as password is not allowed
+        </small>
     </div>
     <div class="form-group">
       <label>Confirm Password</label>
